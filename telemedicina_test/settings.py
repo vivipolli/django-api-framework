@@ -1,4 +1,7 @@
 import os
+import dj_database_url
+from decouple import config
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -8,7 +11,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = ')^mgwmkw(2&r@kv9+i&1*76!vep1y5t-x!e+(rdjz&pzlxj--4'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -62,19 +65,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'telemedicina_test.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/2.1/ref/settings/#databases
+DATABASE_URL = config('DATABASE_URL')
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'rijgzlqt',
-        'USER': 'rijgzlqt',
-        'PASSWORD': 'FVDu9JLx_Ab-dSS_AHVbhJrIQUjIH1-J',
-        'HOST': 'isilo.db.elephantsql.com',
-        'PORT': '5432'
-    }
+    'default': dj_database_url.config(default=DATABASE_URL)
 }
 
 

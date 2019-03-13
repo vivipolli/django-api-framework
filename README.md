@@ -48,3 +48,5 @@ senha: testjob
 python manage.py makemigrations
 python mange.py migrate
 ```
+
+sudo pip install python-decouple
