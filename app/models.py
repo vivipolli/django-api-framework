@@ -13,7 +13,8 @@ class Palestrante(models.Model):
 class Palestra(models.Model):
     titulo = models.CharField(max_length=50)
     descricao = models.TextField()
-    dataHora = models.DateTimeField()
+    data = models.DateField()
+    hora = models.TimeField()
     palestrante = models.ForeignKey(
         'Palestrante', related_name='palestras', on_delete=models.CASCADE)
 
