@@ -1,5 +1,4 @@
 from rest_framework.views import APIView
-from rest_framework.response import Response
 from .filters import PalestraFilter
 from rest_framework import generics
 
