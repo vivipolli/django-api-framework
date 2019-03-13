@@ -29,7 +29,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'app',
-    'django_filters',
+    'django-filter',
 
 ]
 
@@ -113,7 +113,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 REST_FRAMEWORK = {
-    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
+    'DEFAULT_FILTER_BACKENDS': ('django_filter.rest_framework.DjangoFilterBackend',),
     'DATE_FORMAT': "%m/%d/%Y",
     'TIME_FORMAT': "%H:%M"
 }

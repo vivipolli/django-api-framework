@@ -1,5 +1,5 @@
 Django==2.0.13
-django-filters==0.2.1
+django-filter==0.9.2
 djangorestframework==3.9.2
 psycopg2==2.7.7
 python-decouple==3.1
