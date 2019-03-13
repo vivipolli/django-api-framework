@@ -1,8 +1,8 @@
 # Django rest-framework API - (CRUD)
-Tutoria de como criar uma api REST com python e django rest-framework, com manipulações básicas de um objeto, CRUD (create, read, update, delete).
+Tutorial de como criar uma api REST com python e django rest-framework, com manipulações básicas de um objeto, CRUD (create, read, update, delete).
 
 ### Contexto
-Criação de uma aplicação server-side que permita algumas operações básicas de uma API, tomando como exemplo a criação e manipulação de palestras e palestrantes. Além de um CRUD básico, também será adicionado um filtro de listagem de palestra pela data de acontecimento.
+Criação de uma aplicação server-side que permita algumas operações básicas de uma API, tomando como exemplo a criação e manipulação de palestras e palestrantes. Além de um CRUD básico, também será adicionado um filtro de listagem de palestra pela data do acontecimento.
 
 ### Preparando o ambiente
 Vamos isolar nosso ambiente de desenvolvimento criando uma variável de ambiente:
