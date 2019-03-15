@@ -126,12 +126,12 @@ class PalestraFilter(django_filters.FilterSet):
 ```
 
 Nota:
-> Devemos adicionar o _django_filters_ em INSTALLED_APPS e declarar as configurações de data e hora:
-REST_FRAMEWORK = {
-    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),
-    'DATE_FORMAT': "%m/%d/%Y",
-    'TIME_FORMAT': "%H:%M"
-
+> Devemos adicionar o _django_filters_ em INSTALLED_APPS e declarar as configurações de data e hora:    
+REST_FRAMEWORK = {    
+    'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),    
+    'DATE_FORMAT': "%m/%d/%Y",    
+    'TIME_FORMAT': "%H:%M"    
+}
 
 Agora criaremos nossas Views em views.py, estas serão responsáveis por receber requisições web e retornar uma resposta a ela. Dentro dela iremos escrever as classes para a criação do nosso CRUD.
 Há várias formas de criar métodos com a função de criar, listar, atualizar e deletar, mas algumas funcionalidades do rest-framework traz algumas facilidades, como o **Generics** **Views**, que torna o código mais curto de algumas operações rotineramente efetuadas.
