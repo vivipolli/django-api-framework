@@ -126,7 +126,7 @@ class PalestraFilter(django_filters.FilterSet):
 ```
 
 Nota:
-> Devemos adicionar o _django_filters_ em INSTALLED_APPS e declarar as configurações de data e hora:    
+> Devemos adicionar o _django_filters_ em INSTALLED_APPS e declarar as configurações de data e hora em _settings.py_:    
 REST_FRAMEWORK = {    
     'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',),    
     'DATE_FORMAT': "%m/%d/%Y",    
@@ -250,4 +250,118 @@ E finalmente enviamos nosso projeto para o repositório do Heroku e fazemos o de
 git add .
 git commit -m 'Configuring the app'
 git push heroku master --force
+```
+
+## Deploy no Kubernetes
+
+### Docker 
+Vamos criar uma imagem de nossa aplicação, criando um arquivo _Dockerfile_ dentro de nosso diretório raíz chamado _project-test_, e adicionando os seguintes comandos:
+```Dockerfile
+FROM python:3.6
+ENV PYTHONUNBUFFERED 1
+RUN mkdir /project-test
+WORKDIR /project-test
+ADD requirements.txt /project-test/
+RUN pip install -r requirements.txt
+ADD . /project-test/
+EXPOSE 8000
+CMD python manage.py runserver 0.0.0.0:8000
+```
+Fazer as configurações necessárias para enviar a imagem para o google cloud:
+Antes, certifique-se que tem as instalações do SDK do Cloud, tem acesso ao registry e o Docker com as credenciais já configuradas.
+Autenticação:
+```
+$ gcloud auth configure-docker
+```
+Build da imagem:
+```
+$ docker build -t project-django
+```
+Adicionando a tag id que é gerada ao final da build:
+```
+docker tag ee63e8fba388 gcr.io/my_project/django/project-django:tag
+```
+E finalmente envie a imagem para o registry do gcloud:
+```
+docker push gcr.io/my_project/django/project-django:tag
+```
+### Kubernetes
+Precisamos armazenar a SECRET_KEY do django em uma secret no kubernetes, para isso, execute o seguinte comando:
+```
+kubectl create secret generic secret-django --from-literal=SECRET_KEY=<meu_secret_settings>
+```
+
+Crie um arquivo de deployment chamado django-deploy.yaml:
+```Yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: project-django
+  namespace: django-rest
+  labels:
+    app: project-django
+spec:
+  selector:
+    matchLabels:
+      app: project-django
+  template:
+    metadata:
+      labels:
+        app: project-django
+    spec:
+      containers:
+      - name: project-django
+        image:  gcr.io/my_project/django/project-django:tag
+        ports:
+        - containerPort: 8000
+        env:
+          - name: SECRET_KEY
+            valueFrom:
+              secretKeyRef:
+                name: secret-django
+                key: SECRET_KEY
+
+``` 
+No arquivo django _settings.py_, use o environ para pegar o valor da variável de ambiente criado do deployment:
+
+```python
+from os import environ
+SECRET_KEY = environ.get('SECRET_KEY')
+```
+
+Você também pode adicionar as credenciais do banco de dados que deseja utilizar criando um secret e uma variável, por exemplo:
+```Yaml
+      - env:
+        - name: DJANGO_APP_DB_USER
+          valueFrom:
+            secretKeyRef:
+              name: cloudsql-db-credentials
+              key: username
+        - name: DJANGO_APP_DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: cloudsql-db-credentials
+              key: password
+```
+Faça o deployment:
+```
+$ kubectl apply -f django-deploy.yaml
+```
+Agora precisamos criar um serviço loadbalancer para disponibilizar nossa aplicação
+```Yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name:project-django
+  namespace: django-rest
+spec:
+  selector:
+    app:project-django
+  ports:
+  - port: 8000
+    targetPort: 8000
+  type: LoadBalancer
+```
+```
+kubectl apply -f django-svc.yaml
 ```
