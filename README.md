@@ -174,11 +174,11 @@ $ python manage.py runserver
 ## Testando com Postman
 Postman é uma ferramenta de auxílio no desenvolvimento, importante principalmente na hora de testar APIs ou realização de integrações com APIs e a aplicação que irá receber uma request.
 Após a instalação do [Postman](https://www.getpostman.com/downloads/), adicionamos nossa url no campo designado e no campo de valor do Content Type, especificamos o formato json:
- ![alt text](https://github.com/vivipolli/django-api-framework/blob/master/postman-pictures/postman_headers.png).
- Para listar os palestrantes retornando um json de cada Id, apenas selecionamos a requisição GET e depois _send_:
- ![alt text](https://github.com/vivipolli/django-api-framework/blob/master/postman-pictures/postman_get.png)    
+ ![alt text](https://github.com/vivipolli/django-api-framework/blob/master/postman-pictures/postman_headers2.png).     
+ Para listar os palestrantes retornando um json de cada Id, apenas selecionamos a requisição GET e depois _send_:https://github.com/vivipolli/django-api-framework/blob/master/postman-pictures/postman_headers2.png
+ ![alt text](https://github.com/vivipolli/django-api-framework/blob/master/postman-pictures/postman_get.png)             
  E para criar um novo palestrante, fazemos um post e inserimos os pares chave/valor nos campos do parâmetro:
- ![alt text](https://github.com/vivipolli/django-api-framework/blob/master/postman-pictures/postman_post.png)
+ ![alt text](https://github.com/vivipolli/django-api-framework/blob/master/postman-pictures/post_params.png)
 ## Deploy no Heroku
 Para a disponibilidade da aplicação com uma url, utilizamos o Heroku.
 ### Instalação e inicialização
