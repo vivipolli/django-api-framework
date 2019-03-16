@@ -171,6 +171,14 @@ Finalmente rodamos localmente nossa aplicação:
 ```
 $ python manage.py runserver
 ```
+## Testando com Postman
+Postman é uma ferramenta de auxílio no desenvolvimento, importante principalmente na hora de testar APIs ou realização de integrações com APIs e a aplicação que irá receber uma request.
+Após a instalação do [Postman](https://www.getpostman.com/downloads/), adicionamos nossa url no campo designado e no campo de valor do Content Type, especificamos o formato json:
+ ![alt text](https://github.com/vivipolli/django-api-framework/blob/master/postman-pictures/postman_headers.png).
+ Para listar os palestrantes retornando um json de cada Id, apenas selecionamos a requisição GET e depois _send_:
+ ![alt text](https://github.com/vivipolli/django-api-framework/blob/master/postman-pictures/postman_get.png)    
+ E para criar um novo palestrante, fazemos um post e inserimos os pares chave/valor nos campos do parâmetro:
+ ![alt text](https://github.com/vivipolli/django-api-framework/blob/master/postman-pictures/postman_post.png)
 ## Deploy no Heroku
 Para a disponibilidade da aplicação com uma url, utilizamos o Heroku.
 ### Instalação e inicialização
@@ -254,7 +262,7 @@ git push heroku master --force
 
 ## Deploy no Kubernetes
 
-### Docker 
+### Docker
 Vamos criar uma imagem de nossa aplicação, criando um arquivo _Dockerfile_ dentro de nosso diretório raíz chamado _project-test_, e adicionando os seguintes comandos:
 ```Dockerfile
 FROM python:3.6
@@ -321,7 +329,7 @@ spec:
                 name: secret-django
                 key: SECRET_KEY
 
-``` 
+```
 No arquivo django _settings.py_, use o environ para pegar o valor da variável de ambiente criado do deployment:
 
 ```python
